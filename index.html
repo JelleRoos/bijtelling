@@ -5,8 +5,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Bijtelling Calculator – Eenvoudig</title>
-    <!-- Optioneel: Inter webfont (veilig om weg te laten als je eigen font gebruikt) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -69,26 +67,42 @@
         <section class="card result">
             <h2>Resultaat</h2>
             <div id="messages" class="messages" aria-live="polite"></div>
+
+            <!-- Desktop/tablet totals -->
             <div class="totals">
-                <div class="total">
-                    <div class="label">Bruto p/jaar</div>
-                    <div class="value" id="grossYear">—</div>
-                </div>
                 <div class="total">
                     <div class="label">Bruto p/maand</div>
                     <div class="value" id="grossMonth">—</div>
                 </div>
-                <div class="total" id="netYearWrap" hidden>
-                    <div class="label">Netto (schatting) p/jaar</div>
-                    <div class="value" id="netYear">—</div>
+                <div class="total">
+                    <div class="label">Bruto p/jaar</div>
+                    <div class="value" id="grossYear">—</div>
                 </div>
                 <div class="total" id="netMonthWrap" hidden>
                     <div class="label">Netto (schatting) p/maand</div>
                     <div class="value" id="netMonth">—</div>
                 </div>
+                <div class="total" id="netYearWrap" hidden>
+                    <div class="label">Netto (schatting) p/jaar</div>
+                    <div class="value" id="netYear">—</div>
+                </div>
             </div>
         </section>
     </main>
+
+    <!-- Sticky totals (mobile only) -->
+    <div class="sticky-total" id="sticky">
+        <div class="sticky-grid">
+            <div class="sticky-item"><span class="label">Bruto p/maand</span><span class="value"
+                    id="sGrossMonth">—</span></div>
+            <div class="sticky-item"><span class="label">Bruto p/jaar</span><span class="value" id="sGrossYear">—</span>
+            </div>
+            <div class="sticky-item"><span class="label">Netto p/maand</span><span class="value" id="sNetMonth">—</span>
+            </div>
+            <div class="sticky-item"><span class="label">Netto p/jaar</span><span class="value" id="sNetYear">—</span>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>

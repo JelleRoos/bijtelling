@@ -18,12 +18,18 @@
         <section class="card">
             <form id="calc-form" autocomplete="off">
                 <div class="grid">
+                    <!-- Consumentenprijs -->
                     <div class="field">
-                        <label for="s_price">Consumentenprijs (€)</label>
-                        <input id="s_price" type="number" min="0" step="100" placeholder="Bijv. 35.000" />
-                        <small>Incl. btw & bpm.</small>
+                        <label for="s_price">Consumentenprijs</label>
+                        <small>(incl. btw & bpm)</small>
+                        <div class="input-wrap">
+                            <span class="prefix">€</span>
+                            <input id="s_price" type="number" min="0" step="100" inputmode="numeric" pattern="[0-9]*"
+                                placeholder="Bijv. 35000" />
+                        </div>
                     </div>
 
+                    <!-- Brandstof -->
                     <div class="field">
                         <label>Brandstof</label>
                         <div class="radio-row" role="radiogroup" aria-label="Brandstof">
@@ -35,6 +41,7 @@
                         </div>
                     </div>
 
+                    <!-- Privé-gebruik -->
                     <div class="field">
                         <label>Privé-gebruik</label>
                         <div class="radio-row" role="radiogroup" aria-label="Privé-gebruik">
@@ -45,6 +52,7 @@
                         </div>
                     </div>
 
+                    <!-- Belastingtarief -->
                     <div class="field">
                         <label for="s_tax">Bruto inkomen per jaar</label>
                         <select id="s_tax">
@@ -55,9 +63,14 @@
                         </select>
                     </div>
 
+                    <!-- Eigen bijdrage -->
                     <div class="field">
-                        <label for="s_own">Eigen bijdrage (per maand) (€)</label>
-                        <input id="s_own" type="number" min="0" step="5" placeholder="Bijv. 0" />
+                        <label for="s_own">Eigen bijdrage (per maand)</label>
+                        <div class="input-wrap">
+                            <span class="prefix">€</span>
+                            <input id="s_own" type="number" min="0" step="5" inputmode="numeric" pattern="[0-9]*"
+                                placeholder="Bijv. 0" />
+                        </div>
                         <small>Wordt van de bijtelling afgetrokken.</small>
                     </div>
                 </div>
@@ -68,7 +81,6 @@
             <h2>Resultaat</h2>
             <div id="messages" class="messages" aria-live="polite"></div>
 
-            <!-- Desktop/tablet totals -->
             <div class="totals">
                 <div class="total">
                     <div class="label">Bruto p/maand</div>

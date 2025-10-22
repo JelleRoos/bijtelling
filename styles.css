@@ -226,6 +226,12 @@ h2 {
         font-size: .86rem
     }
 
+    .input-wrap input,
+    select {
+        font-size: 16px;
+        /* >=16px voorkomt zoom */
+    }
+
     body {
         padding-bottom: 108px
     }

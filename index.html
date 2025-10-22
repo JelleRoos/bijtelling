@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="nl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bijtelling Calculator – Eenvoudig</title>
+    <style>
+        /* Look & feel geïnspireerd op Autolease van Centraal Beheer */
+        :root {
+            --cb-green: #00B33D;
+            /* primaire groen (Centraal Beheer) */
+            --bg: #ffffff;
+            /* witte achtergrond */
+            --text: #0b1a13;
+            /* bijna-zwart tekstkleur */
+            --muted: #5f6b76;
+            /* gedempte tekst */
+            --border: #e6e9ee;
+            /* zachte randkleur */
+            --card: #ffffff;
+            /* kaarten op wit */
+            --input-bg: #ffffff;
+            /* lichte inputs */
+            --shadow: 0 10px 24px rgba(16, 24, 40, .06);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 32px auto;
+            padding: 0 16px
+        }
+
+        .header h1 {
+            margin: 0 0 6px;
+            letter-spacing: .2px;
+            font-weight: 800
+        }
+
+        .sub {
+            margin: 0 0 20px;
+            color: var(--muted)
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        @media (max-width:760px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .field label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .field input[type="number"],
+        .field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--input-bg);
+            color: var(--text);
+            outline: none
+        }
+
+        .field input[type="number"]:focus,
+        .field select:focus {
+            border-color: var(--cb-green);
+            box-shadow: 0 0 0 3px rgba(0, 179, 61, .15)
+        }
+
+        .field small {
+            display: block;
+            color: var(--muted);
+            margin-top: 6px
+        }
+
+        .radio-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        .radio {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .radio input {
+            accent-color: var(--cb-green)
+        }
+
+        .messages {
+            margin-bottom: 12px
+        }
+
+        .msg {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #f6fff9;
+            color: #0f3d20
+        }
+
+        .msg.ok {
+            border-color: rgba(0, 179, 61, .35)
+        }
+
+        .totals {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px
+        }
+
+        @media (max-width:760px) {
+            .totals {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        .total {
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: #fafbfc
+        }
+
+        .total .label {
+            font-size: .92rem;
+            color: var(--muted);
+            font-weight: 600
+        }
+
+        .total .value {
+            margin-top: 6px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #0b1a13
+        }
+
+        h2 {
+            margin: 0 0 12px
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>Bijtelling calculator</h1>
+            <p class="sub">Vul de gegevens in om je verwachte bijtelling voor 2025 te berekenen.</p>
+        </header>
+
+        <section class="card">
+            <form id="calc-form" autocomplete="off">
+                <div class="grid">
+                    <div class="field">
+                        <label for="s_price">Consumentenprijs (€)</label>
+                        <input id="s_price" type="number" min="0" step="100" placeholder="Bijv. 35.000" />
+                        <small>Incl. btw & bpm.</small>
+                    </div>
+                    <div class="field">
+                        <label>Brandstof</label>
+                        <div class="radio-row" role="radiogroup" aria-label="Brandstof">
+                            <label class="radio"><input type="radio" name="s_fuel" value="ev" checked /> 100%
+                                elektrisch</label>
+                            <label class="radio"><input type="radio" name="s_fuel" value="ev_full" /> Waterstof</label>
+                            <label class="radio"><input type="radio" name="s_fuel" value="ice" />
+                                Benzine/diesel/hybride</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Privé-gebruik</label>
+                        <div class="radio-row" role="radiogroup" aria-label="Privé-gebruik">
+                            <label class="radio"><input type="radio" name="s_private" value="under" /> Minder dan 500
+                                km</label>
+                            <label class="radio"><input type="radio" name="s_private" value="over" checked /> Meer dan
+                                500 km</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="s_tax">Bruto inkomen per jaar</label>
+                        <select id="s_tax">
+                            <option value="">Alleen bruto tonen</option>
+                            <option value="0.3582">€ 0 – € 38.441 (~35,82%)</option>
+                            <option value="0.3748" selected>€ 38.441 – € 76.815 (~37,48%)</option>
+                            <option value="0.495">€ 76.815+ (49,50%)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="s_own">Eigen bijdrage (per maand) (€)</label>
+                        <input id="s_own" type="number" min="0" step="5" placeholder="Bijv. 0" />
+                        <small>Wordt van de bijtelling afgetrokken.</small>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section class="card result">
+            <h2>Resultaat</h2>
+            <div id="messages" class="messages" aria-live="polite"></div>
+            <div class="totals">
+                <div class="total">
+                    <div class="label">Bruto p/jaar</div>
+                    <div class="value" id="grossYear">—</div>
+                </div>
+                <div class="total">
+                    <div class="label">Bruto p/maand</div>
+                    <div class="value" id="grossMonth">—</div>
+                </div>
+                <div class="total" id="netYearWrap" hidden>
+                    <div class="label">Netto (schatting) p/jaar</div>
+                    <div class="value" id="netYear">—</div>
+                </div>
+                <div class="total" id="netMonthWrap" hidden>
+                    <div class="label">Netto (schatting) p/maand</div>
+                    <div class="value" id="netMonth">—</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const fmt = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+        const s_price = document.getElementById('s_price');
+        const s_tax = document.getElementById('s_tax');
+        const s_own = document.getElementById('s_own');
+        const messagesEl = document.getElementById('messages');
+        const grossYearEl = document.getElementById('grossYear');
+        const grossMonthEl = document.getElementById('grossMonth');
+        const netYearEl = document.getElementById('netYear');
+        const netMonthEl = document.getElementById('netMonth');
+        const netYearWrap = document.getElementById('netYearWrap');
+        const netMonthWrap = document.getElementById('netMonthWrap');
+
+        function calc() {
+            messagesEl.innerHTML = '';
+            const fuel = document.querySelector('input[name="s_fuel"]:checked')?.value || 'ev';
+            const under = document.querySelector('input[name="s_private"]:checked')?.value === 'under';
+            const base = Math.max(0, +s_price.value || 0);
+            const ownYear = Math.max(0, (+s_own.value || 0) * 12);
+            const tax = parseFloat(s_tax.value || '');
+
+            if (base === 0) { pushMsg('Vul een consumentenprijs in.', 'ok'); setTotals(0, 0, null); return; }
+            if (under) { pushMsg('Minder dan 500 km privé: geen bijtelling.', 'ok'); setTotals(0, 0, null); return; }
+
+            let bruto = 0;
+            if (fuel === 'ev_full') {
+                bruto = 0.17 * base;
+            } else if (fuel === 'ev') {
+                const cap = 30000, p1 = Math.min(base, cap), p2 = Math.max(0, base - cap);
+                bruto = 0.17 * p1 + 0.22 * p2;
+            } else {
+                bruto = 0.22 * base;
+            }
+
+            bruto = Math.max(0, bruto - ownYear);
+            const grossYear = Math.round(bruto);
+            const grossMonth = Math.round(grossYear / 12);
+
+            let netYear = null, netMonth = null;
+            if (!Number.isNaN(tax)) { netYear = Math.round(grossYear * tax); netMonth = Math.round(netYear / 12); }
+
+            pushMsg('2025-regels toegepast (EV-cap t/m €30.000).', 'ok');
+            setTotals(grossYear, grossMonth, netYear !== null ? { netYear, netMonth } : null);
+        }
+
+        function setTotals(gY, gM, net) {
+            grossYearEl.textContent = gY ? fmt.format(gY) : '—';
+            grossMonthEl.textContent = gM ? fmt.format(gM) : '—';
+            if (net) { netYearWrap.hidden = false; netMonthWrap.hidden = false; netYearEl.textContent = fmt.format(net.netYear); netMonthEl.textContent = fmt.format(net.netMonth); }
+            else { netYearWrap.hidden = true; netMonthWrap.hidden = true; }
+        }
+
+        function pushMsg(t, tone = 'ok') {
+            const d = document.createElement('div');
+            d.className = `msg ${tone}`;
+            d.textContent = t;
+            messagesEl.appendChild(d);
+        }
+
+        document.getElementById('calc-form').addEventListener('input', calc);
+        calc();
+    </script>
+</body>
+
+</html>

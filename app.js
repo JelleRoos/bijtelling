@@ -1,5 +1,11 @@
-const fmt = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+// Formatter voor euro's, zonder centen
+const fmt = new Intl.NumberFormat('nl-NL', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0
+});
 
+// Elementen
 const s_price = document.getElementById('s_price');
 const s_tax = document.getElementById('s_tax');
 const s_own = document.getElementById('s_own');
@@ -18,26 +24,55 @@ const sNetYear = document.getElementById('sNetYear');
 
 function calc() {
     messagesEl.innerHTML = '';
+
     const fuel = document.querySelector('input[name="s_fuel"]:checked')?.value || 'ev';
     const under = document.querySelector('input[name="s_private"]:checked')?.value === 'under';
+
     const base = Math.max(0, +s_price.value || 0);
     const ownYear = Math.max(0, (+s_own.value || 0) * 12);
     const tax = parseFloat(s_tax.value || '');
 
-    if (base === 0) { pushMsg('Vul een consumentenprijs in.', 'ok'); setTotals(0, 0, null); updateSticky(0, 0, null, null); return; }
-    if (under) { pushMsg('Minder dan 500 km privé: geen bijtelling.', 'ok'); setTotals(0, 0, null); updateSticky(0, 0, null, null); return; }
+    if (base === 0) {
+        pushMsg('Vul een consumentenprijs in.', 'ok');
+        setTotals(0, 0, null);
+        updateSticky(0, 0, null, null);
+        return;
+    }
 
+    if (under) {
+        pushMsg('Minder dan 500 km privé: geen bijtelling.', 'ok');
+        setTotals(0, 0, null);
+        updateSticky(0, 0, null, null);
+        return;
+    }
+
+    // 2025-regels
+    // ICE/hybride: 22% over volledige cataloguswaarde
+    // EV: 17% tot cap, 22% boven cap
+    // Waterstof (ev_full): 17% over volledige waarde
     let bruto = 0;
-    if (fuel === 'ev_full') { bruto = 0.17 * base; }
-    else if (fuel === 'ev') { const cap = 30000, p1 = Math.min(base, cap), p2 = Math.max(0, base - cap); bruto = 0.17 * p1 + 0.22 * p2; }
-    else { bruto = 0.22 * base; }
+    if (fuel === 'ev_full') {
+        bruto = 0.17 * base;
+    } else if (fuel === 'ev') {
+        const cap = 30000;
+        const p1 = Math.min(base, cap);
+        const p2 = Math.max(0, base - cap);
+        bruto = 0.17 * p1 + 0.22 * p2;
+    } else {
+        bruto = 0.22 * base;
+    }
 
+    // Eigen bijdrage in mindering
     bruto = Math.max(0, bruto - ownYear);
+
     const grossYear = Math.round(bruto);
     const grossMonth = Math.round(grossYear / 12);
 
     let netYear = null, netMonth = null;
-    if (!Number.isNaN(tax)) { netYear = Math.round(grossYear * tax); netMonth = Math.round(netYear / 12); }
+    if (!Number.isNaN(tax)) {
+        netYear = Math.round(grossYear * tax);
+        netMonth = Math.round(netYear / 12);
+    }
 
     pushMsg('2025-regels toegepast (EV-cap t/m €30.000).', 'ok');
     setTotals(grossYear, grossMonth, netYear !== null ? { netYear, netMonth } : null);
@@ -47,12 +82,17 @@ function calc() {
 function setTotals(gY, gM, net) {
     grossYearEl.textContent = gY ? fmt.format(gY) : '—';
     grossMonthEl.textContent = gM ? fmt.format(gM) : '—';
+
     if (net) {
-        netYearWrap.hidden = false; netMonthWrap.hidden = false;
-        netYearEl.textContent = fmt.format(net.netYear); netMonthEl.textContent = fmt.format(net.netMonth);
+        netYearWrap.hidden = false;
+        netMonthWrap.hidden = false;
+        netYearEl.textContent = fmt.format(net.netYear);
+        netMonthEl.textContent = fmt.format(net.netMonth);
     } else {
-        netYearWrap.hidden = true; netMonthWrap.hidden = true;
-        netYearEl.textContent = '—'; netMonthEl.textContent = '—';
+        netYearWrap.hidden = true;
+        netMonthWrap.hidden = true;
+        netYearEl.textContent = '—';
+        netMonthEl.textContent = '—';
     }
 }
 
@@ -65,13 +105,14 @@ function updateSticky(gM, gY, nM, nY) {
     sNetYear.textContent = (show && nY != null) ? fmt.format(nY) : '—';
 }
 
-function pushMsg(t, tone = 'ok') {
+function pushMsg(text, tone = 'ok') {
     const d = document.createElement('div');
     d.className = `msg ${tone}`;
-    d.textContent = t;
+    d.textContent = text;
     messagesEl.appendChild(d);
 }
 
+// UX: scroll-wheel op number-inputs uitschakelen ( voorkomt rare sprongen )
 ['s_price', 's_own'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -79,5 +120,6 @@ function pushMsg(t, tone = 'ok') {
     el.addEventListener('wheel', () => el.blur(), { passive: true });
 });
 
+// Live recalculatie
 document.getElementById('calc-form').addEventListener('input', calc);
 calc();

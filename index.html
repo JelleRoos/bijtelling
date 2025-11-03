@@ -3,59 +3,76 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bijtelling Calculator – Eenvoudig</title>
+
+    <!-- Centraal Beheer globale styles -->
+    <link rel="stylesheet" href="https://autolease.centraalbeheer.nl/dist/assets/mainStyles-DWsXq6wW.css" />
+
+    <!-- App-specifieke (kleine) styles, na de globale styles -->
     <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-    <main class="container">
-        <header class="header">
+    <!-- Namespace wrapper om styles te isoleren -->
+    <main class="cb-bijtelling">
+        <header class="cb-bjt-header">
             <h1>Bijtelling calculator</h1>
-            <p class="sub">Vul de gegevens in om je verwachte bijtelling voor 2025 te berekenen.</p>
+            <p class="cb-bjt-sub">Vul de gegevens in om je verwachte bijtelling voor 2025 te berekenen.</p>
         </header>
 
-        <section class="card">
+        <section class="cb-bjt-card">
             <form id="calc-form" autocomplete="off">
-                <div class="grid">
+                <div class="cb-bjt-grid">
                     <!-- Consumentenprijs -->
-                    <div class="field">
+                    <div class="cb-bjt-field">
                         <label for="s_price">Consumentenprijs</label>
-                        <small>(incl. btw & bpm)</small>
-                        <div class="input-wrap">
-                            <span class="prefix">€</span>
+                        <small>(incl. btw &amp; bpm)</small>
+                        <div class="cb-bjt-inputwrap">
+                            <span class="cb-bjt-prefix">€</span>
                             <input id="s_price" type="number" min="0" step="100" inputmode="numeric" pattern="[0-9]*"
                                 placeholder="Bijv. 35000" />
                         </div>
                     </div>
 
                     <!-- Brandstof -->
-                    <div class="field">
+                    <div class="cb-bjt-field">
                         <label>Brandstof</label>
-                        <div class="radio-row" role="radiogroup" aria-label="Brandstof">
-                            <label class="radio"><input type="radio" name="s_fuel" value="ev" checked /> 100%
-                                elektrisch</label>
-                            <label class="radio"><input type="radio" name="s_fuel" value="ev_full" /> Waterstof</label>
-                            <label class="radio"><input type="radio" name="s_fuel" value="ice" />
-                                Benzine/diesel/hybride</label>
+                        <div class="cb-bjt-radio-row" role="radiogroup" aria-label="Brandstof">
+                            <label class="cb-bjt-radio">
+                                <input type="radio" name="s_fuel" value="ev" checked />
+                                100% elektrisch
+                            </label>
+                            <label class="cb-bjt-radio">
+                                <input type="radio" name="s_fuel" value="ev_full" />
+                                Waterstof
+                            </label>
+                            <label class="cb-bjt-radio">
+                                <input type="radio" name="s_fuel" value="ice" />
+                                Benzine/diesel/hybride
+                            </label>
                         </div>
                     </div>
 
                     <!-- Privé-gebruik -->
-                    <div class="field">
+                    <div class="cb-bjt-field">
                         <label>Privé-gebruik</label>
-                        <div class="radio-row" role="radiogroup" aria-label="Privé-gebruik">
-                            <label class="radio"><input type="radio" name="s_private" value="under" /> Minder dan 500
-                                km</label>
-                            <label class="radio"><input type="radio" name="s_private" value="over" checked /> Meer dan
-                                500 km</label>
+                        <div class="cb-bjt-radio-row" role="radiogroup" aria-label="Privé-gebruik">
+                            <label class="cb-bjt-radio">
+                                <input type="radio" name="s_private" value="under" />
+                                Minder dan 500 km
+                            </label>
+                            <label class="cb-bjt-radio">
+                                <input type="radio" name="s_private" value="over" checked />
+                                Meer dan 500 km
+                            </label>
                         </div>
                     </div>
 
                     <!-- Belastingtarief -->
-                    <div class="field">
+                    <div class="cb-bjt-field">
                         <label for="s_tax">Bruto inkomen per jaar</label>
-                        <div class="select">
+                        <div class="cb-bjt-select">
                             <select id="s_tax">
                                 <option value="">Alleen bruto tonen</option>
                                 <option value="0.3582">€ 0 – € 38.441 (~35,82%)</option>
@@ -66,10 +83,10 @@
                     </div>
 
                     <!-- Eigen bijdrage -->
-                    <div class="field">
+                    <div class="cb-bjt-field">
                         <label for="s_own">Eigen bijdrage (per maand)</label>
-                        <div class="input-wrap">
-                            <span class="prefix">€</span>
+                        <div class="cb-bjt-inputwrap">
+                            <span class="cb-bjt-prefix">€</span>
                             <input id="s_own" type="number" min="0" step="5" inputmode="numeric" pattern="[0-9]*"
                                 placeholder="Bijv. 0" />
                         </div>
@@ -79,24 +96,24 @@
             </form>
         </section>
 
-        <section class="card result">
+        <section class="cb-bjt-card cb-bjt-result">
             <h2>Resultaat</h2>
-            <div id="messages" class="messages" aria-live="polite"></div>
+            <div id="messages" class="cb-bjt-messages" aria-live="polite"></div>
 
-            <div class="totals">
-                <div class="total">
+            <div class="cb-bjt-totals">
+                <div class="cb-bjt-total">
                     <div class="label">Bruto p/maand</div>
                     <div class="value" id="grossMonth">—</div>
                 </div>
-                <div class="total">
+                <div class="cb-bjt-total">
                     <div class="label">Bruto p/jaar</div>
                     <div class="value" id="grossYear">—</div>
                 </div>
-                <div class="total" id="netMonthWrap" hidden>
+                <div class="cb-bjt-total" id="netMonthWrap" hidden>
                     <div class="label">Netto (schatting) p/maand</div>
                     <div class="value" id="netMonth">—</div>
                 </div>
-                <div class="total" id="netYearWrap" hidden>
+                <div class="cb-bjt-total" id="netYearWrap" hidden>
                     <div class="label">Netto (schatting) p/jaar</div>
                     <div class="value" id="netYear">—</div>
                 </div>
@@ -105,20 +122,28 @@
     </main>
 
     <!-- Sticky totals (mobile only) -->
-    <div class="sticky-total" id="sticky">
-        <div class="sticky-grid">
-            <div class="sticky-item"><span class="label">Bruto p/maand</span><span class="value"
-                    id="sGrossMonth">—</span></div>
-            <div class="sticky-item"><span class="label">Bruto p/jaar</span><span class="value" id="sGrossYear">—</span>
+    <div class="cb-bjt-sticky" id="sticky">
+        <div class="cb-bjt-sticky-grid">
+            <div class="cb-bjt-sticky-item">
+                <span class="label">Bruto p/maand</span>
+                <span class="value" id="sGrossMonth">—</span>
             </div>
-            <div class="sticky-item"><span class="label">Netto p/maand</span><span class="value" id="sNetMonth">—</span>
+            <div class="cb-bjt-sticky-item">
+                <span class="label">Bruto p/jaar</span>
+                <span class="value" id="sGrossYear">—</span>
             </div>
-            <div class="sticky-item"><span class="label">Netto p/jaar</span><span class="value" id="sNetYear">—</span>
+            <div class="cb-bjt-sticky-item">
+                <span class="label">Netto p/maand</span>
+                <span class="value" id="sNetMonth">—</span>
+            </div>
+            <div class="cb-bjt-sticky-item">
+                <span class="label">Netto p/jaar</span>
+                <span class="value" id="sNetYear">—</span>
             </div>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
 </body>
 
 </html>

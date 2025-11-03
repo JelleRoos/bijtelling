@@ -1,322 +1,291 @@
-:root {
-    --cb-green: #00B33D;
-    --bg: #ffffff;
-    --text: #0b1a13;
-    --muted: #5f6b76;
-    --border: #e6e9ee;
-    --card: #ffffff;
-    --input-bg: #ffffff;
-    --shadow: 0 10px 24px rgba(16, 24, 40, .06);
-}
-
-* {
-    box-sizing: border-box
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    line-height: 1.45;
-}
-
-/* Layout */
-.container {
+/* Alles namespacen om conflicts met Umbraco/global CSS te vermijden */
+.cb-bijtelling {
+    /* spacing container */
     max-width: 980px;
     margin: 32px auto;
-    padding: 0 16px
+    padding: 0 16px;
 }
 
-.header h1 {
+/* Header */
+.cb-bjt-header h1 {
     margin: 0 0 6px;
     font-weight: 800;
-    font-size: 2.1rem
+    font-size: 2.1rem;
 }
 
-.sub {
+.cb-bjt-sub {
     margin: 0 0 18px;
-    color: var(--muted);
-    font-size: 1rem
+    color: #5f6b76;
+    font-size: 1rem;
 }
 
-.card {
-    background: var(--card);
-    border: 1px solid var(--border);
+/* Card */
+.cb-bjt-card {
+    background: #fff;
+    border: 1px solid #e6e9ee;
     border-radius: 16px;
     padding: 18px;
-    box-shadow: var(--shadow);
-    margin-bottom: 16px
+    box-shadow: 0 10px 24px rgba(16, 24, 40, .06);
+    margin-bottom: 16px;
 }
 
-.grid {
+/* Grid */
+.cb-bjt-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px
+    gap: 14px;
 }
 
-@media(max-width:760px) {
-    .grid {
-        grid-template-columns: 1fr
+@media (max-width: 760px) {
+    .cb-bjt-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-/* Compacte form */
-.field label {
+/* Field */
+.cb-bjt-field label {
     display: block;
     font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 4px;
-    line-height: 1.2
+    line-height: 1.2;
 }
 
-.field small {
+.cb-bjt-field small {
     display: block;
-    color: var(--muted);
+    color: #5f6b76;
     margin-top: 4px;
-    font-size: 0.8rem
+    font-size: 0.8rem;
 }
 
-/* Prefix wrapper */
-.input-wrap {
+/* Prefix input */
+.cb-bjt-inputwrap {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.input-wrap .prefix {
+.cb-bjt-prefix {
     position: absolute;
     left: 10px;
-    color: var(--muted);
+    color: #5f6b76;
     font-weight: 600;
     font-size: 0.95rem;
 }
 
-.input-wrap input {
+.cb-bjt-inputwrap input {
     width: 100%;
     padding: 8px 10px 8px 26px;
     /* ruimte voor € */
     font-size: 0.9rem;
-    border: 1px solid var(--border);
+    border: 1px solid #e6e9ee;
     border-radius: 8px;
-    background: var(--input-bg);
-    color: var(--text);
+    background: #fff;
+    color: #0b1a13;
     outline: none;
 }
 
-.input-wrap input:focus {
-    border-color: var(--cb-green);
+.cb-bjt-inputwrap input:focus {
+    border-color: #00B33D;
     box-shadow: 0 0 0 3px rgba(0, 179, 61, .15);
 }
 
 /* Radios */
-.radio-row {
+.cb-bjt-radio-row {
     display: flex;
     flex-wrap: wrap;
     gap: 8px 14px;
-    row-gap: 4px
+    row-gap: 4px;
 }
 
-.radio {
+.cb-bjt-radio {
     display: flex;
     gap: 6px;
     align-items: center;
     font-size: 0.9rem;
-    line-height: 1.2
+    line-height: 1.2;
 }
 
-.radio input {
+.cb-bjt-radio input {
     width: 16px;
     height: 16px;
-    accent-color: var(--cb-green)
+    accent-color: #00B33D;
 }
 
 /* Messages */
-.messages {
-    margin-bottom: 10px
+.cb-bjt-messages {
+    margin-bottom: 10px;
 }
 
-.msg {
+.cb-bjt-messages .msg {
     padding: 8px 10px;
     border-radius: 10px;
-    border: 1px solid var(--border);
+    border: 1px solid #e6e9ee;
     background: #f6fff9;
-    color: #0f3d20
+    color: #0f3d20;
 }
 
-.msg.ok {
-    border-color: rgba(0, 179, 61, .35)
+.cb-bjt-messages .msg.ok {
+    border-color: rgba(0, 179, 61, .35);
 }
 
 /* Totals (desktop/tablet) */
-.totals {
+.cb-bjt-totals {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px
+    gap: 12px;
 }
 
-.total {
+.cb-bjt-total {
     padding: 14px;
     border-radius: 12px;
-    border: 1px solid var(--border);
-    background: #fafbfc
+    border: 1px solid #e6e9ee;
+    background: #fafbfc;
 }
 
-.total .label {
+.cb-bjt-total .label {
     font-size: .88rem;
-    color: var(--muted);
-    font-weight: 600
+    color: #5f6b76;
+    font-weight: 600;
 }
 
-.total .value {
+.cb-bjt-total .value {
     margin-top: 6px;
     font-size: 1.3rem;
     font-weight: 800;
-    color: #0b1a13
+    color: #0b1a13;
 }
 
-h2 {
-    margin: 0 0 10px
+.cb-bjt-result h2 {
+    margin: 0 0 10px;
 }
 
-/* Mobile layout */
-@media(max-width:480px) {
-
-    html,
-    body {
-        font-size: 15px
-    }
-
-    .container {
+/* Mobile tweaks */
+@media (max-width: 480px) {
+    .cb-bijtelling {
         margin: 16px auto;
-        padding: 0 12px
+        padding: 0 12px;
     }
 
-    .header h1 {
+    .cb-bjt-header h1 {
         font-size: 1.5rem;
-        margin-bottom: 4px
+        margin-bottom: 4px;
     }
 
-    .sub {
+    .cb-bjt-sub {
         font-size: .92rem;
-        margin-bottom: 10px
+        margin-bottom: 10px;
     }
 
-    .card {
+    .cb-bjt-card {
         padding: 14px;
-        border-radius: 14px
+        border-radius: 14px;
     }
 
-    .grid {
-        gap: 12px
+    .cb-bjt-grid {
+        gap: 12px;
     }
 
-    .field label {
-        font-size: .86rem
+    .cb-bjt-field label {
+        font-size: .86rem;
     }
 
-    .input-wrap input {
+    .cb-bjt-inputwrap input {
         padding: 7px 8px 7px 24px;
-        font-size: .86rem
+        font-size: .86rem;
     }
 
-    .radio {
-        font-size: .86rem
+    .cb-bjt-radio {
+        font-size: .86rem;
     }
 
-    .input-wrap input,
-    select {
-        font-size: 16px;
-        /* >=16px voorkomt zoom */
+    .cb-bijtelling {
+        padding-bottom: 108px;
     }
 
-    body {
-        padding-bottom: 108px
-    }
+    /* ruimte voor sticky */
 }
 
-@media(max-width:760px) {
-    .totals {
-        display: none
+/* Verberg desktop totals op small screens */
+@media (max-width: 760px) {
+    .cb-bjt-totals {
+        display: none;
     }
 }
 
 /* Sticky totals (mobile) */
-.sticky-total {
+.cb-bjt-sticky {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     background: #fff;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid #e6e9ee;
     box-shadow: 0 -6px 24px rgba(16, 24, 40, .06);
     padding: 12px 14px;
     display: none;
-    z-index: 50
+    z-index: 50;
+    visibility: hidden;
+    /* JS schakelt dit naar visible wanneer gevuld */
 }
 
-@media(max-width:760px) {
-    .sticky-total {
-        display: block
+@media (max-width: 760px) {
+    .cb-bjt-sticky {
+        display: block;
     }
 }
 
-.sticky-grid {
+.cb-bjt-sticky-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px
+    gap: 10px;
 }
 
-.sticky-item {
+.cb-bjt-sticky-item {
     display: flex;
-    flex-direction: column
+    flex-direction: column;
 }
 
-.sticky-item .label {
+.cb-bjt-sticky-item .label {
     font-size: .8rem;
-    color: var(--muted)
+    color: #5f6b76;
 }
 
-.sticky-item .value {
+.cb-bjt-sticky-item .value {
     font-size: 1.12rem;
     font-weight: 800;
     color: #0b1a13;
-    line-height: 1.1
+    line-height: 1.1;
 }
 
-/* Geen number-input spinners */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+/* Number spinners uit */
+.cb-bijtelling input[type="number"]::-webkit-outer-spin-button,
+.cb-bijtelling input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    margin: 0
+    margin: 0;
 }
 
-input[type="number"] {
-    -moz-appearance: textfield
+.cb-bijtelling input[type="number"] {
+    -moz-appearance: textfield;
 }
 
-/* ---------- Fancy, accessible select ---------- */
-.select {
+/* Custom select (geïsoleerd) */
+.cb-bjt-select {
     position: relative;
     display: grid;
     align-items: center;
 }
 
-/* Hide native arrow, keep semantics */
-.select select {
+.cb-bjt-select select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-
     width: 100%;
     padding: 10px 44px 10px 12px;
-    /* ruimte voor arrow rechts */
-    border: 1px solid var(--border);
+    border: 1px solid #e6e9ee;
     border-radius: 10px;
-    background: var(--input-bg);
-    color: var(--text);
+    background: #fff;
+    color: #0b1a13;
     font-size: 0.95rem;
     line-height: 1.2;
     outline: none;
@@ -324,8 +293,7 @@ input[type="number"] {
     box-shadow: 0 1px 0 rgba(16, 24, 40, .02);
 }
 
-/* Custom chevron (SVG as data URI, tint ≈ muted) */
-.select::after {
+.cb-bjt-select::after {
     content: "";
     position: absolute;
     right: 12px;
@@ -335,60 +303,50 @@ input[type="number"] {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 18px 18px;
-    /* #5f6b76 in data URI */
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%235f6b76' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
 }
 
-/* Hover/active */
-.select select:hover {
+.cb-bjt-select select:hover {
     border-color: rgba(0, 179, 61, .45);
-    /* cb-green tint */
     box-shadow: 0 0 0 3px rgba(0, 179, 61, .08);
 }
 
-.select select:active {
+.cb-bjt-select select:active {
     transform: translateY(0.5px);
 }
 
-/* Focus ring: duidelijk en toegankelijk */
-.select select:focus-visible {
-    border-color: var(--cb-green);
+.cb-bjt-select select:focus-visible {
+    border-color: #00B33D;
     box-shadow: 0 0 0 4px rgba(0, 179, 61, .15);
 }
 
-/* Disabled staat (voor als je later varianten maakt) */
-.select select:disabled {
-    color: var(--muted);
+.cb-bjt-select select:disabled {
+    color: #5f6b76;
     background: #f4f6f8;
     cursor: not-allowed;
     opacity: .85;
 }
 
-/* Opties: iets meer leesbaar */
-.select select option {
+.cb-bjt-select select option {
     font-size: 0.95rem;
 }
 
-/* Mobile: voorkom zoom en houd de tap-target prettig */
 @media (max-width: 480px) {
-    .select select {
+    .cb-bjt-select select {
         font-size: 16px;
-        /* >=16px voorkomt iOS zoom */
         padding: 9px 42px 9px 12px;
         border-radius: 9px;
     }
 }
 
-/* High-contrast/fallback: als box-shadow uit staat, blijft border zichtbaar */
 @media (prefers-contrast: more) {
-    .select select:focus-visible {
-        box-shadow: 0 0 0 3px var(--cb-green);
+    .cb-bjt-select select:focus-visible {
+        box-shadow: 0 0 0 3px #00B33D;
     }
 }
 
-/* Reduced motion respecteren */
 @media (prefers-reduced-motion: reduce) {
-    .select select {
+    .cb-bjt-select select {
         transition: none;
     }
 }
